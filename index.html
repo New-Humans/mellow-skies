@@ -1,0 +1,206 @@
+<html>
+	<head>
+		<meta charset="UTF-8"> 
+		<style>
+
+			/* http://meyerweb.com/eric/tools/css/reset/ 
+			   v2.0 | 20110126
+			   License: none (public domain)
+			*/
+
+			html, body, div, span, applet, object, iframe,
+			h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+			a, abbr, acronym, address, big, cite, code,
+			del, dfn, em, img, ins, kbd, q, s, samp,
+			small, strike, strong, sub, sup, tt, var,
+			b, u, i, center,
+			dl, dt, dd, ol, ul, li,
+			fieldset, form, label, legend,
+			table, caption, tbody, tfoot, thead, tr, th, td,
+			article, aside, canvas, details, embed, 
+			figure, figcaption, footer, header, hgroup, 
+			menu, nav, output, ruby, section, summary,
+			time, mark, audio, video {
+				margin: 0;
+				padding: 0;
+				border: 0;
+				font-size: 100%;
+				font: inherit;
+				vertical-align: baseline;
+			}
+			/* HTML5 display-role reset for older browsers */
+			article, aside, details, figcaption, figure, 
+			footer, header, hgroup, menu, nav, section {
+				display: block;
+			}
+			body {
+				line-height: 1;
+			}
+			ol, ul {
+				list-style: none;
+			}
+			blockquote, q {
+				quotes: none;
+			}
+			blockquote:before, blockquote:after,
+			q:before, q:after {
+				content: '';
+				content: none;
+			}
+			table {
+				border-collapse: collapse;
+				border-spacing: 0;
+			}
+
+			/* mine */
+			img {
+				display: block;
+			}
+
+			.pic {
+				margin: 10px 30px;
+				width: 200px;
+				height: 200px;
+				align-self: center;
+				background-image: url("source.png");
+				position: relative;
+				transition: 3s all ease-in-out;
+				top: 0;
+				opacity: 0.4;
+			}
+
+			.pic:hover, .pic:active, .pic:focus {
+				top: 20px;
+				opacity: 1;
+			}
+
+			.one {
+				background-position: -5px 0px;
+				width: 322px;
+				height: 611px;
+			}
+
+			.two {
+				background-position: 402px -3px;
+				width: 393px;
+				height: 481px;
+			}
+
+			.three {
+				background-position: -1px 366px;
+				width: 391px;
+				height: 365px;
+			}
+
+			.four {
+				background-position: 331px 456px;
+				width: 325px;
+				height: 456px;
+			}
+
+			body {
+				min-width: 100vw; 
+				min-height: 100vh;
+				position: relative;
+			}
+
+			#play {
+				position: absolute; 
+				top: 0; 
+				bottom: 0; 
+				left: 0; 
+				right: 0; 
+				cursor: pointer;
+				display: flex; 
+				justify-content: center;
+				align-content: center;
+				background: rgba(255, 170, 170, 0.6);
+				z-index: 100;
+				transition: 1s all ease-in;
+			}
+
+			.pics {
+				display: flex; 
+				justify-content: center;
+				align-content: center;
+				height: 100%;
+				width: 100%;
+
+				background: linear-gradient(to right, rgba(255,175,75,1) 0%, rgba(255,175,75,1) 29%, rgba(252,124,209,1) 100%);
+				flex-flow: row wrap;
+			}
+
+			.play {
+				display: block;
+				position: relative;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+
+			.off {
+				bottom: 100% !important;
+			}
+
+			.off svg {
+				display: none;
+			}
+
+			.up {
+				top: 20px;
+				opacity: 1;
+			}
+
+		</style>
+	</head>
+
+	<body>
+		<div id="play">
+			<svg height="300" width="300" class="play">
+				<polygon points="0,0 300,150 0,300" style="fill:black; stroke:pink;stroke-width:1" />
+			</svg>
+		</div>
+		<div class="pics">
+			<div tabindex="0" id="one" class="one pic"></div>
+			<div tabindex="0" id="two" class="two pic"></div>
+			<div tabindex="0" id="three" class="three pic"></div>
+			<div tabindex="0" id="four" class="four pic"></div>
+		</div>
+	</body>
+
+	<audio id="music" loop>
+		<source src="mellow_skies.ogg" type="audio/ogg" />
+		<source src="mellow_skies.mp3" type="audio/mpeg" />
+	</audio>
+
+	<script>
+		var play = document.getElementById("play");
+		var music = document.getElementById("music");
+		play.addEventListener("click", function() {
+			play.classList.add("off");
+			music.play();
+			setInterval(changePic, 10000);
+		});
+
+
+		var ps = ['one', 'two', 'three', 'four'];
+		var pics = [];
+		for (var i = 0; i < ps.length; i++) {
+			pics[i] = document.getElementById(ps[i]);
+		}
+		var index = 0;
+
+		function changePic()
+		{
+			console.log("changing pic to " + index + "!");
+			pics[index].classList.add("up");
+			window.setTimeout(removeActive, 7000);
+		}
+		function removeActive() {
+			console.log("removing active to " + index + "!");
+			pics[index].classList.remove("up");
+			index = index + 1;
+			if (index >= pics.length)
+				index = 0;
+		}
+	</script>
+</html>
